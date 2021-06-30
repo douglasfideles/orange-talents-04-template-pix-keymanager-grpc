@@ -5,16 +5,35 @@ option java_package = "br.com.zuporange";
 option java_outer_classname = "Pixproject";
 option objc_class_prefix = "HLW";
 
-package br.com.zuporange;
 
-service PixprojectService {
-  rpc send (PixprojectRequest) returns (PixprojectReply) {}
+import "google/protobuf/timestamp.proto";
+
+service PropostaGrpcService {
+  rpc cadastra (CadastraPixRequest) returns (CadastraPixResponse) {}
 }
 
-message PixprojectRequest {
-  string name = 1;
+enum TipoChave {
+  UNKNOWN_TIPO_CHAVE  = 0;
+  CPF                 = 1;
+  CELULAR             = 2;
+  EMAIL               = 3;
+  ALEATORIA           = 4;
 }
 
-message PixprojectReply {
-  string message = 1;
+enum TipoConta {
+  UNKNOWN_TIPO_CONTA  = 0;
+  CONTA_CORRENTE      = 1;
+  CONTA_POUPANCA      = 2;
+}
+
+message CadastraPixRequest {
+  string clienteId    = 1;
+  TipoChave tipoChave = 2;
+  string chave        = 3;
+  TipoConta tipoConta = 4;
+}
+
+message CadastraPixResponse {
+  int64 clienteId = 2;
+  int64 pixId = 3;
 }
